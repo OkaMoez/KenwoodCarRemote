@@ -15,9 +15,9 @@ NecInterface::NecInterface(bool markOutputLevel, uint8_t outputPin) :
     _outputPin(outputPin) {
     pinMode(_outputPin, OUTPUT);
 #ifdef DEBUG
-    String textOut = "[NEC Interface] Initialized\n";
-    textOut += "[NEC Interface] Mark Level: " + String(_markOutputLevel) + "\n";
-    textOut += "[NEC Interface] Output Pin: " + String(_outputPin);    
+    String textOut = "[NEC Interface] Initialized";
+    textOut += "\n[NEC Interface] Mark Level: " + String(_markOutputLevel);
+    textOut += "\n[NEC Interface] Output Pin: " + String(_outputPin);    
     Serial.println(textOut);
 #endif
 }
