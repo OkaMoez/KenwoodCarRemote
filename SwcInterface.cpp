@@ -11,6 +11,11 @@ SwcInterface::SwcInterface(uint8_t inputPin) :
 
 SwcButton SwcInterface::readSwc() {
     int rawSwc = analogRead(_inputPin);
+#ifdef DEBUG
+    while (!Serial) {
+    }
+    Serial.println(rawSwc);
+#endif
     if (rawSwc <= 0) return SwcError;
     if (rawSwc < 10) return SwcVolumeDown; 
     if (rawSwc < 20) return SwcVolumeUp; 
@@ -23,38 +28,33 @@ SwcButton SwcInterface::readSwc() {
 }
 
 void SwcInterface::printSwc(SwcButton buttonPressed) {
-    while (!Serial) {
-
-    }
-
-    String buttonName;
+    String buttonName = "Button name: ";
     switch(buttonPressed){
         case SwcOpen:
-            buttonName = "No Button\r";
+            buttonName += "No Button\r";
             break;
         case SwcVolumeUp:
-            buttonName = "Volume Up\n";
+            buttonName += "Volume Up\n";
             break;
         case SwcVolumeDown:
-            buttonName = "Volume Down\n";
+            buttonName += "Volume Down\n";
             break; 
         case SwcSeekUp:
-            buttonName = "Seek Up\n";
+            buttonName += "Seek Up\n";
             break;
         case SwcSeekDown:
-            buttonName = "Seek Down\n";
+            buttonName += "Seek Down\n";
             break;
         case SwcMode:
-            buttonName = "Mode\n";
+            buttonName += "Mode\n";
             break;
         case SwcMute:
-            buttonName = "Mute\n";
+            buttonName += "Mute\n";
             break;
         default:
-            buttonName = "Error\r";
+            buttonName += "Error\r";
             break;
     }
 
-    Serial.print("button name: ");
     Serial.print(buttonName);
 }
