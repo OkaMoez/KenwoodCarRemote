@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "LocalDefine.h"
 #include "KenwoodEncoder.h"
 #include "NecMessage.h"
 
@@ -7,8 +8,11 @@ KenwoodEncoder::KenwoodEncoder() :
         KenwoodConstants::kDefaultDeviceAddress) {
 }
 
-KenwoodEncoder::KenwoodEncoder(uint8_t deviceAddress) {
-    _deviceAddress = deviceAddress;
+KenwoodEncoder::KenwoodEncoder(uint8_t deviceAddress) :
+    _deviceAddress(deviceAddress) {
+#ifdef DEBUG
+    Serial.println("[Kenwood Encoder] Initialized");
+#endif
 }
 
 void KenwoodEncoder::setKenwoodDeviceAddress(uint8_t address) {
@@ -16,7 +20,7 @@ void KenwoodEncoder::setKenwoodDeviceAddress(uint8_t address) {
 }
 
 NecMessage KenwoodEncoder::buildNecMessage(SwcButton button) {
-#ifdef DEBUG_NEC
+#ifdef DEBUG_KENWOOD
     String textOut = "Button Code Recieved: " + button;
     Serial.println(textOut);
 #endif
@@ -31,12 +35,12 @@ NecMessage KenwoodEncoder::buildNecMessage(uint8_t kenwoodCode) {
     messageBytes[2] = kenwoodCode;
     messageBytes[3] = ~kenwoodCode;
 
-#ifdef VERBOSE_BITS
+#ifdef DEBUG_KENWOOD_BYTES
     String textOut = "Array Contents: " 
-        + messageBytes[0] + " " 
-        + messageBytes[1] + " "
-        + messageBytes[2] + " "
-        + messageBytes[3];
+        + String(messageBytes[0]) + " " 
+        + String(messageBytes[1]) + " "
+        + String(messageBytes[2]) + " "
+        + String(messageBytes[3]);
     Serial.println(textOut);
 #endif
 

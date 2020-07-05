@@ -1,7 +1,7 @@
 {
     "programmer": "AVRISP mkII",
     "board": "arduino:avr:leonardo",
-    "port": "COM3",
+    "port": "COM6",
     "output": "../build",
     "sketch": "Adapter.ino"
 }

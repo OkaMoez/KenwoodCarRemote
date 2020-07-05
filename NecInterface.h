@@ -23,13 +23,15 @@ namespace NecConstants {
     static const uint8_t kDefaultOutputPin = 5;
 }
 
+struct NecMessage;
+
 class NecInterface {
     public:
         NecInterface();
         NecInterface(bool markOutputLevel, uint8_t outputPin);
 
         void setOutputPin(uint8_t outputPin);
-        void sendNec(uint8_t messageBytes[4]);
+        void sendNec(NecMessage necMessage);
         void sendNec(uint32_t message);
         void sendNecRepeat();
 

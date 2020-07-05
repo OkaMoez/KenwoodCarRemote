@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "LocalDefine.h"
 #include "SwcInterface.h"
 
 SwcInterface::SwcInterface() :
@@ -7,14 +8,16 @@ SwcInterface::SwcInterface() :
 
 SwcInterface::SwcInterface(uint8_t inputPin) : 
     _inputPin(inputPin) {
+#ifdef DEBUG
+    Serial.println("[Swc Interface] Initialized");
+#endif
 }
 
 SwcButton SwcInterface::readSwc() {
     int rawSwc = analogRead(_inputPin);
-#ifdef DEBUG
-    while (!Serial) {
-    }
-    Serial.println(rawSwc);
+#ifdef DEBUG_SWC_RAW
+    String textOut = "Raw Pin: " + String(rawSwc);
+    Serial.println(textOut);
 #endif
     if (rawSwc <= 0) return SwcError;
     if (rawSwc < 10) return SwcVolumeDown; 
@@ -31,30 +34,38 @@ void SwcInterface::printSwc(SwcButton buttonPressed) {
     String buttonName = "Button name: ";
     switch(buttonPressed){
         case SwcOpen:
-            buttonName += "No Button\r";
+#ifdef DEBUG_SWC_BUTTONS_VERBOSE
+            buttonName += "No Button";
             break;
+#else
+            return;
+#endif 
         case SwcVolumeUp:
-            buttonName += "Volume Up\n";
+            buttonName += "Volume Up";
             break;
         case SwcVolumeDown:
-            buttonName += "Volume Down\n";
+            buttonName += "Volume Down";
             break; 
         case SwcSeekUp:
-            buttonName += "Seek Up\n";
+            buttonName += "Seek Up";
             break;
         case SwcSeekDown:
-            buttonName += "Seek Down\n";
+            buttonName += "Seek Down";
             break;
         case SwcMode:
-            buttonName += "Mode\n";
+            buttonName += "Mode";
             break;
         case SwcMute:
-            buttonName += "Mute\n";
+            buttonName += "Mute";
             break;
         default:
-            buttonName += "Error\r";
+#ifdef DEBUG_SWC_BUTTONS_VERBOSE
+            buttonName += "Error";
             break;
+#else
+            return;
+#endif
     }
 
-    Serial.print(buttonName);
+    Serial.println(buttonName);
 }

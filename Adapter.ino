@@ -1,3 +1,4 @@
+#include "LocalDefine.h"
 #include "SwcButtonEnum.h"
 #include "SwcInterface.h"
 #include "KenwoodEncoder.h"
@@ -7,9 +8,15 @@ SwcInterface swcInterface;
 KenwoodEncoder kenwoodEncoder;
 NecInterface necInterface;
 
+SwcButton lastButton = SwcEndOfEnum;
+
 void setup()
 {
+#ifdef DEBUG
     Serial.begin(9600);
+    while (!Serial) {
+    }
+#endif
     swcInterface = SwcInterface();
     kenwoodEncoder = KenwoodEncoder();
     necInterface = NecInterface();
@@ -17,7 +24,18 @@ void setup()
 
 void loop()
 {
-    //SwcButton buttonIndex = swcInterface.readSwc();
-    //swcInterface.printSwc(buttonIndex);
-    
+    SwcButton buttonIndex = swcInterface.readSwc();
+
+#ifdef DEBUG_SWC_BUTTONS
+    swcInterface.printSwc(buttonIndex);
+#endif
+
+    if (buttonIndex != lastButton) {
+        necInterface.sendNec(kenwoodEncoder.buildNecMessage(buttonIndex));
+    }
+    else {
+        necInterface.sendNecRepeat();
+    }
+
+    buttonIndex = lastButton;
 }
