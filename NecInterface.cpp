@@ -23,7 +23,7 @@ NecInterface::NecInterface(bool markOutputLevel, uint8_t outputPin) :
 }
 
 void NecInterface::tick() {
-    if ((micros() - _pulseStart) > _pulseDelay) {
+    if ((micros() - _pulseStart) >= _pulseDelay) {
         _sendNextNecPulse();
     }
 }
