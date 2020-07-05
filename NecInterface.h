@@ -6,6 +6,7 @@
 #define NEC_PRINT_BITS
 
 enum class NecDelay : uint32_t {
+    // In microseconds
     PreambleMark = 90000,
     PreambleSpace = 45000,
     BitMark = 560,
