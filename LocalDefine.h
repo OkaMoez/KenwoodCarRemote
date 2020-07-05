@@ -5,7 +5,7 @@
 
     // SWC
     //#define DEBUG_SWC_RAW
-    #define DEBUG_SWC_BUTTONS
+    //#define DEBUG_SWC_BUTTONS
     //#define DEBUG_SWC_BUTTONS_VERBOSE
 
     // Kenwood
