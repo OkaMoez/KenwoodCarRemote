@@ -34,8 +34,8 @@ void NecInterface::sendNec(NecMessage necMessage) {
     message ^= uint32_t(necMessage.mMessage[3]);
 
 #ifdef DEBUG_NEC_BYTES
-        Serial.print("Assembled Message: ");
-        Serial.println(message);
+        String textOut = "[NEC Interface] Assembled Message: " + String(message);
+        Serial.println(textOut);
 #endif
 
     sendNec(message);
@@ -43,13 +43,12 @@ void NecInterface::sendNec(NecMessage necMessage) {
 
 void NecInterface::sendNec(uint32_t rawMessage) {
 #ifdef DEBUG_NEC_BITS
-    Serial.print(rawMessage);
-    Serial.print(" ");
+    Serial.println("[NEC Interface] Sending Message...");
     int counter = 1;
 #endif
 
     _sendNecPreamble();
-    for (uint32_t  mask = uint32_t(1);  mask == (uint32_t(1) << (32 - 1));  mask <<= 1) {
+    for (uint32_t  mask = uint32_t(1);  mask != uint32_t(0);  mask <<= 1) {
         if (rawMessage & mask) {
             _sendNecOne();
         } else {
@@ -70,11 +69,19 @@ void NecInterface::sendNecRepeat() {
     _writeNecSpace(NecDelay::RepeatSpace);
     _writeNecMark(NecDelay::BitMark);
     _writeNecSpace(NecDelay::RepeatEnd);
+
+#ifdef DEBUG
+    Serial.println("[NEC Interface] Repeat Sent");
+#endif
 }
 
 void NecInterface::_sendNecPreamble() {
     _writeNecMark(NecDelay::PreambleMark);
     _writeNecSpace(NecDelay::PreambleSpace);
+    
+#ifdef DEBUG
+    Serial.print("[NEC Interface] Preamble/ ");
+#endif
 }
 
 void NecInterface::_sendNecPostamble() {
@@ -82,7 +89,7 @@ void NecInterface::_sendNecPostamble() {
     _writeNecSpace(NecDelay::PostambleEnd);
     
 #ifdef DEBUG_NEC_BITS
-    Serial.println();
+    Serial.println("/Postamble");
 #endif
 }
 
