@@ -1,6 +1,6 @@
 #pragma once
-#include <stdint.h>
-#include "NecMessage.h"
+#include <Arduino.h>
+#include "NecQueue.h"
 
 #define NEC_PRINT_BYTES
 #define NEC_PRINT_BITS
@@ -31,21 +31,29 @@ class NecInterface {
         NecInterface();
         NecInterface(bool markOutputLevel, uint8_t outputPin);
 
+        void tick();
+
         void setOutputPin(uint8_t outputPin);
-        void sendNec(NecMessage necMessage);
-        void sendNec(uint32_t message);
+        bool readyForNewMessage();
+        void sendNecMessage(NecMessage necMessage);
+        void sendNecMessage(uint32_t message);
         void sendNecRepeat();
 
     private:
+        NecQueue _queue;
         bool _markOutputLevel = LOW;
         uint8_t _outputPin = 0x00;
+        unsigned long _pulseStart = 0;
+        unsigned long _pulseDelay = 0;
 
-        void _sendNecPreamble();
-        void _sendNecPostamble();
+        void _enqueueNecPreamble();
+        void _enqueueNecPostamble();
 
-        void _sendNecOne();
-        void _sendNecZero();
+        void _enqueueNecOne();
+        void _enqueueNecZero();
 
-        void _writeNecMark(NecDelay delay);
-        void _writeNecSpace(NecDelay delay);
+        void _enqueueNecMark(NecDelay pulse);
+        void _enqueueNecSpace(NecDelay pulse);
+
+        void _sendNextNecPulse();
 };

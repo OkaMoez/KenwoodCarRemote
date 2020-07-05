@@ -34,7 +34,7 @@ NecPulse NecQueue::dequeue() {
 #ifdef DEBUG
         Serial.println("[Nec Interface] ERROR: Atempting to Read Empty Queue");
 #endif
-        return;
+        return NecPulse();
     }
 
     uint8_t tempFront = _front;
