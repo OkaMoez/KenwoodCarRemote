@@ -14,7 +14,7 @@ enum class NecDelay : uint32_t {
     ZeroSpace = 560,
     RepeatSpace = 2250,
     PostambleEnd = 40000,
-    RepeatEnd = 900000,
+    RepeatEnd = 90000,
     EndLow = 0
 };
 

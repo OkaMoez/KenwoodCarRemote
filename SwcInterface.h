@@ -13,7 +13,7 @@
 
 namespace SwcConstants{
     static const uint8_t kDefaultSwcInputPin = 0;
-    static const uint8_t kDefaultSwcVerificationDelay = 10;
+    static const uint8_t kDefaultSwcVerificationDelay = 1;
 };
 
 class SwcInterface {
