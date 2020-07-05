@@ -7,13 +7,13 @@
 
 enum class NecDelay : uint32_t {
     // In microseconds
-    PreambleMark = 90000,
-    PreambleSpace = 45000,
+    PreambleMark = 9000,
+    PreambleSpace = 4500,
     BitMark = 560,
     OneSpace = 1690,
     ZeroSpace = 560,
-    RepeatSpace = 22500,
-    PostambleEnd = 400000,
+    RepeatSpace = 2250,
+    PostambleEnd = 40000,
     RepeatEnd = 900000,
     EndLow = 0
 };
