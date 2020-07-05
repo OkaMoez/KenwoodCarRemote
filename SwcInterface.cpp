@@ -15,18 +15,26 @@ SwcInterface::SwcInterface(uint8_t inputPin) :
 
 SwcButton SwcInterface::readSwc() {
     int rawSwc = analogRead(_inputPin);
+
+    for (uint8_t i = 0; i < 3; i++)  {
+        if (rawSwc != analogRead(_inputPin)) {
+            return;
+        }
+        delay(SwcConstants::kDefaultSwcVerificationDelay);
+    }
+
 #ifdef DEBUG_SWC_RAW
     String textOut = "Raw Pin: " + String(rawSwc);
     Serial.println(textOut);
 #endif
     if (rawSwc <= 0) return SwcButton::Error;
-    if (rawSwc < 10) return SwcButton::VolumeDown; 
-    if (rawSwc < 20) return SwcButton::VolumeUp; 
-    if (rawSwc < 40) return SwcButton::SeekUp; 
-    if (rawSwc < 70) return SwcButton::SeekDown; 
-    if (rawSwc < 120) return SwcButton::Mode; 
-    if (rawSwc < 250) return SwcButton::Mute;
-    if (rawSwc < 400) return SwcButton::Open;
+    if (rawSwc < 20) return SwcButton::VolumeDown; 
+    if (rawSwc < 45) return SwcButton::VolumeUp; 
+    if (rawSwc < 85) return SwcButton::SeekUp; 
+    if (rawSwc < 150) return SwcButton::SeekDown; 
+    if (rawSwc < 250) return SwcButton::Mode; 
+    if (rawSwc < 400) return SwcButton::Mute;
+    if (rawSwc < 700) return SwcButton::Open;
     return SwcButton::Error;
 }
 

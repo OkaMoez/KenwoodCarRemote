@@ -9,10 +9,11 @@
 // w/ 10k Ohm Resistor
 // [3, 13, 28, 53, 95, 173, 344]
 // w/ 4.7k Ohm Resistor
-// []
+// [10, 30, 61, 110, 186, 312, 533]
 
 namespace SwcConstants{
     static const uint8_t kDefaultSwcInputPin = 0;
+    static const uint8_t kDefaultSwcVerificationDelay = 10;
 };
 
 class SwcInterface {
