@@ -7,8 +7,6 @@
 #define LSBIT_FIRST
 //#define LSBYTE_FIRST
 
-struct NecMessage;
-
 namespace KenwoodConstants {
     static const uint8_t kDefaultDeviceAddress = 0xb9;
 
@@ -22,6 +20,8 @@ namespace KenwoodConstants {
         0x16 // Mute
     };
 }
+
+struct NecMessage;
 
 class KenwoodEncoder {
     public:

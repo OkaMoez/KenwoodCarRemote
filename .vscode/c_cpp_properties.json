@@ -3,6 +3,7 @@
         {
             "name": "Win32",
             "includePath": [
+                "C:\\Users\\brigh\\Documents\\Arduino\\libraries\\Queue\\src",
                 "C:\\Users\\brigh\\Documents\\Arduino\\libraries\\elapsedMillis",
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\libraries\\EEPROM\\src",
                 "C:\\Program Files (x86)\\Arduino\\tools\\**",
@@ -11,8 +12,7 @@
             "forcedInclude": [
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h"
             ],
-            "defines": [
-            ],
+            "defines": [],
             "intelliSenseMode": "clang-x64",
             "compilerPath": "C:/Program Files (x86)/Arduino/hardware/tools/avr/bin/avr-gcc.exe",
             "cStandard": "c11",

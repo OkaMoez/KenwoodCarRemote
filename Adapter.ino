@@ -1,5 +1,6 @@
 #include "LocalDefine.h"
 #include "SwcButtonEnum.h"
+#include "NecMessage.h"
 #include "SwcInterface.h"
 #include "KenwoodEncoder.h"
 #include "NecInterface.h"
@@ -20,6 +21,8 @@ void setup()
     swcInterface = SwcInterface();
     kenwoodEncoder = KenwoodEncoder();
     necInterface = NecInterface();
+
+    necInterface.sendNecMessage(kenwoodEncoder.buildNecMessage(SwcButton::VolumeUp));
 }
 
 void loop()
@@ -31,15 +34,16 @@ void loop()
 #endif
 
     if (buttonIndex == SwcButton::Error) {
-        return;
     }
     else if (buttonIndex != lastButton) {
-        if (buttonIndex < SwcButton::EndOfEnum) {
-            necInterface.sendNec(kenwoodEncoder.buildNecMessage(buttonIndex));
+        if ((buttonIndex < SwcButton::EndOfEnum) && necInterface.readyForNewMessage()) {
+            necInterface.sendNecMessage(kenwoodEncoder.buildNecMessage(buttonIndex));
         }
         lastButton = buttonIndex;
     }
-    else if (buttonIndex < SwcButton::EndOfEnum) {
+    else if ((buttonIndex < SwcButton::EndOfEnum) && necInterface.readyForNewMessage()) {
         necInterface.sendNecRepeat();
     }
+
+    necInterface.tick();
 }
