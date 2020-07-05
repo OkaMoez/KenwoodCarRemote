@@ -24,16 +24,23 @@ NecMessage KenwoodEncoder::buildNecMessage(SwcButton button) {
     String textOut = "Button Code Recieved: " + String(static_cast<uint8_t>(button));
     Serial.println(textOut);
 #endif
-    return buildNecMessage(KenwoodConstants::kDefaultCodes[static_cast<uint8_t>(button)]);
+
+    NecMessage necMessage = NecMessage();
+
+    if (button < SwcButton::EndOfEnum) {
+        necMessage = buildNecMessage(KenwoodConstants::kDefaultCodes[static_cast<uint8_t>(button)]);
+    }
+
+    return necMessage;
 }
 
 NecMessage KenwoodEncoder::buildNecMessage(uint8_t kenwoodCode) {
     uint8_t messageBytes[4];
 
-    messageBytes[0] = _deviceAddress;
-    messageBytes[1] = ~_deviceAddress;
-    messageBytes[2] = kenwoodCode;
-    messageBytes[3] = ~kenwoodCode;
+    messageBytes[0] = ~kenwoodCode;
+    messageBytes[1] = kenwoodCode;
+    messageBytes[2] = ~_deviceAddress;
+    messageBytes[3] = _deviceAddress;
 
 #ifdef DEBUG_KENWOOD_BYTES
     String textOut = "Array Contents: " 
