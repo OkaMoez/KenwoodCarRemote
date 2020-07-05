@@ -1,15 +1,16 @@
+#include <Arduino.h>
 #include "SwcInterface.h"
 
 SwcInterface::SwcInterface() :
     SwcInterface(SwcConstants::kDefaultSwcInputPin) {
 }
 
-SwcInterface::SwcInterface(u8 inputPin) : 
+SwcInterface::SwcInterface(uint8_t inputPin) : 
     _inputPin(inputPin) {
 }
 
 SwcButton SwcInterface::readSwc() {
-    int rawSwc = analogRead(SWC_PIN);
+    int rawSwc = analogRead(_inputPin);
     if (rawSwc <= 0) return SwcError;
     if (rawSwc < 10) return SwcVolumeDown; 
     if (rawSwc < 20) return SwcVolumeUp; 
@@ -21,13 +22,10 @@ SwcButton SwcInterface::readSwc() {
     return SwcError;
 }
 
-#ifdef DEBUG_SWC
 void SwcInterface::printSwc(SwcButton buttonPressed) {
-#ifndef VERBOSE_SWC
-    if (buttonPressed == _lastSwcButtonPressed) {
-        return;
+    while (!Serial) {
+
     }
-#endif
 
     String buttonName;
     switch(buttonPressed){
@@ -59,7 +57,4 @@ void SwcInterface::printSwc(SwcButton buttonPressed) {
 
     Serial.print("button name: ");
     Serial.print(buttonName);
-    
-    _lastSwcButtonPressed = buttonPressed;
 }
-#endif

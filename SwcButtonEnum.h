@@ -1,7 +1,7 @@
 #pragma once
 #include <stdint.h>
 
-enum SwcButton : u8 {
+enum SwcButton : uint8_t {
     SwcVolumeUp = 0,
     SwcVolumeDown = 1,
     SwcSeekUp = 2,

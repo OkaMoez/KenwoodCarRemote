@@ -1,5 +1,4 @@
 #pragma once
-
 #include <stdint.h>
 #include "SwcButtonEnum.h"
 
@@ -13,22 +12,17 @@
 // []
 
 namespace SwcConstants{
-    static const u8 kDefaultSwcInputPin = 0;
+    static const uint8_t kDefaultSwcInputPin = 0;
 };
 
 class SwcInterface {
     public:
         SwcInterface();
-        SwcInterface(u8 inputPin);
+        SwcInterface(uint8_t inputPin);
 
         SwcButton readSwc();
-#ifdef DEBUG_SWC
         void printSwc(SwcButton buttonPressed);
-#endif
 
     private:
-        _inputPin = 0;
-#ifdef DEBUG_SWC
-        SwcButton _lastSwcButtonPressed = SwcEndOfEnum;
-#endif
-}
+        uint8_t _inputPin = 0x00;
+};
