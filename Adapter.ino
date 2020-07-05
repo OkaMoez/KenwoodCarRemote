@@ -30,12 +30,16 @@ void loop()
     swcInterface.printSwc(buttonIndex);
 #endif
 
-    if (buttonIndex != lastButton) {
-        necInterface.sendNec(kenwoodEncoder.buildNecMessage(buttonIndex));
+    if (buttonIndex == SwcButton::Error) {
+        return;
     }
-    else {
+    else if (buttonIndex != lastButton) {
+        if (buttonIndex < SwcButton::EndOfEnum) {
+            necInterface.sendNec(kenwoodEncoder.buildNecMessage(buttonIndex));
+        }
+        lastButton = buttonIndex;
+    }
+    else if (buttonIndex < SwcButton::EndOfEnum) {
         necInterface.sendNecRepeat();
     }
-
-    buttonIndex = lastButton;
 }
