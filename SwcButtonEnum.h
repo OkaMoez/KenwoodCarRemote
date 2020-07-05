@@ -1,14 +1,14 @@
 #pragma once
 #include <stdint.h>
 
-enum SwcButton : uint8_t {
-    SwcVolumeUp = 0,
-    SwcVolumeDown = 1,
-    SwcSeekUp = 2,
-    SwcSeekDown = 3,
-    SwcMode = 4,
-    SwcMute = 5,
-    SwcEndOfEnum = 6,
-    SwcOpen = 15,
-    SwcError = 16
+enum class SwcButton : uint8_t {
+    VolumeUp = 0,
+    VolumeDown = 1,
+    SeekUp = 2,
+    SeekDown = 3,
+    Mode = 4,
+    Mute = 5,
+    EndOfEnum = 6,
+    Open = 15,
+    Error = 16
 };

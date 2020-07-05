@@ -19,43 +19,43 @@ SwcButton SwcInterface::readSwc() {
     String textOut = "Raw Pin: " + String(rawSwc);
     Serial.println(textOut);
 #endif
-    if (rawSwc <= 0) return SwcError;
-    if (rawSwc < 10) return SwcVolumeDown; 
-    if (rawSwc < 20) return SwcVolumeUp; 
-    if (rawSwc < 40) return SwcSeekUp; 
-    if (rawSwc < 70) return SwcSeekDown; 
-    if (rawSwc < 120) return SwcMode; 
-    if (rawSwc < 250) return SwcMute;
-    if (rawSwc < 400) return SwcOpen;
-    return SwcError;
+    if (rawSwc <= 0) return SwcButton::Error;
+    if (rawSwc < 10) return SwcButton::VolumeDown; 
+    if (rawSwc < 20) return SwcButton::VolumeUp; 
+    if (rawSwc < 40) return SwcButton::SeekUp; 
+    if (rawSwc < 70) return SwcButton::SeekDown; 
+    if (rawSwc < 120) return SwcButton::Mode; 
+    if (rawSwc < 250) return SwcButton::Mute;
+    if (rawSwc < 400) return SwcButton::Open;
+    return SwcButton::Error;
 }
 
 void SwcInterface::printSwc(SwcButton buttonPressed) {
     String buttonName = "Button name: ";
     switch(buttonPressed){
-        case SwcOpen:
+        case SwcButton::Open:
 #ifdef DEBUG_SWC_BUTTONS_VERBOSE
             buttonName += "No Button";
             break;
 #else
             return;
 #endif 
-        case SwcVolumeUp:
+        case SwcButton::VolumeUp:
             buttonName += "Volume Up";
             break;
-        case SwcVolumeDown:
+        case SwcButton::VolumeDown:
             buttonName += "Volume Down";
             break; 
-        case SwcSeekUp:
+        case SwcButton::SeekUp:
             buttonName += "Seek Up";
             break;
-        case SwcSeekDown:
+        case SwcButton::SeekDown:
             buttonName += "Seek Down";
             break;
-        case SwcMode:
+        case SwcButton::Mode:
             buttonName += "Mode";
             break;
-        case SwcMute:
+        case SwcButton::Mute:
             buttonName += "Mute";
             break;
         default:

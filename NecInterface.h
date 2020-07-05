@@ -5,16 +5,16 @@
 #define NEC_PRINT_BYTES
 #define NEC_PRINT_BITS
 
-enum NecDelay : uint32_t {
-    NecPreambleMark = 90000,
-    NecPreambleSpace = 45000,
-    NecBitMark = 560,
-    NecOneSpace = 1690,
-    NecZeroSpace = 560,
-    NecRepeatSpace = 22500,
-    NecPostambleEnd = 400000,
-    NecRepeatEnd = 900000,
-    NecEndLow = 0
+enum class NecDelay : uint32_t {
+    PreambleMark = 90000,
+    PreambleSpace = 45000,
+    BitMark = 560,
+    OneSpace = 1690,
+    ZeroSpace = 560,
+    RepeatSpace = 22500,
+    PostambleEnd = 400000,
+    RepeatEnd = 900000,
+    EndLow = 0
 };
 
 namespace NecConstants {

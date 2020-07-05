@@ -66,20 +66,20 @@ void NecInterface::sendNec(uint32_t rawMessage) {
 }
 
 void NecInterface::sendNecRepeat() {
-    _writeNecMark(NecPreambleMark);
-    _writeNecSpace(NecRepeatSpace);
-    _writeNecMark(NecBitMark);
-    _writeNecSpace(NecRepeatEnd);
+    _writeNecMark(NecDelay::PreambleMark);
+    _writeNecSpace(NecDelay::RepeatSpace);
+    _writeNecMark(NecDelay::BitMark);
+    _writeNecSpace(NecDelay::RepeatEnd);
 }
 
 void NecInterface::_sendNecPreamble() {
-    _writeNecMark(NecPreambleMark);
-    _writeNecSpace(NecPreambleSpace);
+    _writeNecMark(NecDelay::PreambleMark);
+    _writeNecSpace(NecDelay::PreambleSpace);
 }
 
 void NecInterface::_sendNecPostamble() {
-    _writeNecMark(NecBitMark);
-    _writeNecSpace(NecPostambleEnd);
+    _writeNecMark(NecDelay::BitMark);
+    _writeNecSpace(NecDelay::PostambleEnd);
     
 #ifdef DEBUG_NEC_BITS
     Serial.println();
@@ -87,8 +87,8 @@ void NecInterface::_sendNecPostamble() {
 }
 
 void NecInterface::_sendNecOne() {
-    _writeNecMark(NecBitMark);
-    _writeNecSpace(NecOneSpace);
+    _writeNecMark(NecDelay::BitMark);
+    _writeNecSpace(NecDelay::OneSpace);
 
 #ifdef DEBUG_NEC_BITS
     Serial.print("1");
@@ -96,8 +96,8 @@ void NecInterface::_sendNecOne() {
 }
 
 void NecInterface::_sendNecZero() {
-    _writeNecMark(NecBitMark);
-    _writeNecSpace(NecZeroSpace);
+    _writeNecMark(NecDelay::BitMark);
+    _writeNecSpace(NecDelay::ZeroSpace);
     
 #ifdef DEBUG_NEC_BITS
     Serial.print("0");
@@ -106,10 +106,10 @@ void NecInterface::_sendNecZero() {
 
 void NecInterface::_writeNecMark(NecDelay delay) {
     digitalWrite(_outputPin, _markOutputLevel);
-    delayMicroseconds(delay);
+    delayMicroseconds(static_cast<uint32_t>(delay));
 }
 
 void NecInterface::_writeNecSpace(NecDelay delay) {
     digitalWrite(_outputPin, !_markOutputLevel);
-    delayMicroseconds(delay);
+    delayMicroseconds(static_cast<uint32_t>(delay));
 }

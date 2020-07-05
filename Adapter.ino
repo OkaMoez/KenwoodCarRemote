@@ -8,7 +8,7 @@ SwcInterface swcInterface;
 KenwoodEncoder kenwoodEncoder;
 NecInterface necInterface;
 
-SwcButton lastButton = SwcEndOfEnum;
+SwcButton lastButton = SwcButton::EndOfEnum;
 
 void setup()
 {

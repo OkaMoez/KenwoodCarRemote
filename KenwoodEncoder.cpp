@@ -21,10 +21,10 @@ void KenwoodEncoder::setKenwoodDeviceAddress(uint8_t address) {
 
 NecMessage KenwoodEncoder::buildNecMessage(SwcButton button) {
 #ifdef DEBUG_KENWOOD
-    String textOut = "Button Code Recieved: " + button;
+    String textOut = "Button Code Recieved: " + String(static_cast<uint8_t>(button));
     Serial.println(textOut);
 #endif
-    return buildNecMessage(KenwoodConstants::kDefaultCodes[button]);
+    return buildNecMessage(KenwoodConstants::kDefaultCodes[static_cast<uint8_t>(button)]);
 }
 
 NecMessage KenwoodEncoder::buildNecMessage(uint8_t kenwoodCode) {
