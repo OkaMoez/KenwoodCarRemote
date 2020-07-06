@@ -44,7 +44,7 @@ void loop()
         lastButton = buttonIndex;
     }
     else if ((buttonIndex < SwcButton::EndOfEnum) && necInterface.isReadyForNewMessage()) {
-        //necInterface.sendNecRepeat();
+        necInterface.sendNecRepeat();
     }
 
     necInterface.tick();
