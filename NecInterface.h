@@ -2,9 +2,6 @@
 #include <Arduino.h>
 #include "NecQueue.h"
 
-#define NEC_PRINT_BYTES
-#define NEC_PRINT_BITS
-
 enum class NecDelay : uint32_t {
     // In microseconds
     PreambleMark = 9000,
@@ -34,26 +31,35 @@ class NecInterface {
         void tick();
 
         void setOutputPin(uint8_t outputPin);
-        bool readyForNewMessage();
+        bool isReadyForNewMessage();
         void sendNecMessage(NecMessage necMessage);
         void sendNecMessage(uint32_t message);
         void sendNecRepeat();
 
     private:
-        NecQueue _queue;
         bool _markOutputLevel = LOW;
         uint8_t _outputPin = 0x00;
+
+        NecQueue _queue;
+        NecPulse _currentPulse = NecPulse::None;
         unsigned long _pulseStart = 0;
         unsigned long _pulseDelay = 0;
 
-        void _enqueueNecPreamble();
-        void _enqueueNecPostamble();
-
-        void _enqueueNecOne();
-        void _enqueueNecZero();
-
-        void _enqueueNecMark(NecDelay pulse);
-        void _enqueueNecSpace(NecDelay pulse);
+        bool _isReadyForNextPulse();
+        bool _checkTimeAndWait(unsigned long timer);
 
         void _sendNextNecPulse();
+
+        void _sendNecOne();
+        void _sendNecZero();
+
+        void _beginWritingNecMark(NecDelay delay);
+        void _beginWritingNecSpace(NecDelay delay);
+        void _beginWritingNec(bool outputLevel, NecDelay delay);
+        
+        void _continueNecPulse();
+
+        void _writeNecMark(NecDelay delay);
+        void _writeNecSpace(NecDelay delay);
+        void _writeNec(bool outputLevel, NecDelay delay);
 };

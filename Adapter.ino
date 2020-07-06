@@ -22,7 +22,9 @@ void setup()
     kenwoodEncoder = KenwoodEncoder();
     necInterface = NecInterface();
 
+#ifdef DEBUG
     necInterface.sendNecMessage(kenwoodEncoder.buildNecMessage(SwcButton::VolumeUp));
+#endif
 }
 
 void loop()
@@ -36,13 +38,13 @@ void loop()
     if (buttonIndex == SwcButton::Error) {
     }
     else if (buttonIndex != lastButton) {
-        if ((buttonIndex < SwcButton::EndOfEnum) && necInterface.readyForNewMessage()) {
+        if ((buttonIndex < SwcButton::EndOfEnum) && necInterface.isReadyForNewMessage()) {
             necInterface.sendNecMessage(kenwoodEncoder.buildNecMessage(buttonIndex));
         }
         lastButton = buttonIndex;
     }
-    else if ((buttonIndex < SwcButton::EndOfEnum) && necInterface.readyForNewMessage()) {
-        necInterface.sendNecRepeat();
+    else if ((buttonIndex < SwcButton::EndOfEnum) && necInterface.isReadyForNewMessage()) {
+        //necInterface.sendNecRepeat();
     }
 
     necInterface.tick();

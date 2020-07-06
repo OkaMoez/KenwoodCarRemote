@@ -9,6 +9,6 @@ enum class SwcButton : uint8_t {
     Mode = 4,
     Mute = 5,
     EndOfEnum = 6,
-    Open = 15,
-    Error = 16
+    Open = 14,
+    Error = 15
 };

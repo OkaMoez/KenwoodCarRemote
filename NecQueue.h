@@ -1,8 +1,9 @@
 #pragma once
 #include <stdint.h>
 #include "NecPulse.h"
+
 namespace NecQueueConstants {
-    const uint8_t kMaxQueueSize = 68;
+    static const uint8_t kMaxQueueSize = 34;
 }
 
 class NecQueue {

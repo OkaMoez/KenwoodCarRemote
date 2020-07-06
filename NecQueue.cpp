@@ -1,3 +1,4 @@
+#include "LocalDefine.h"
 #include "NecQueue.h"
 
 NecQueue::NecQueue() {
@@ -37,8 +38,7 @@ NecPulse NecQueue::dequeue() {
         return NecPulse();
     }
 
-    uint8_t tempFront = _front;
     _front = (_front + 1) % NecQueueConstants::kMaxQueueSize;
     _size--;
-    return _queue[tempFront];
+    return _queue[_front];
 }
